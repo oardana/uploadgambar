@@ -22,8 +22,7 @@ function tampilkan($query){
 }
 function tampilSendiri($username) {
 	global $conn;
-	$query = "SELECT nama FROM orang WHERE nama = '$username'";
-	$result = mysqli_query($conn,$query);
+	$result = mysqli_query($conn,"SELECT nama FROM orang WHERE nama = '$username'");
     $rows = [];
     while($row = mysqli_fetch_row($result)){
         $rows[] = $row;
@@ -54,7 +53,7 @@ function upload(){
 	 	</script>";
 		return false;
 	}
-
+	
 	move_uploaded_file($tmpName, 'gambar/'.$namafile);
 	return $namafile;
 }
@@ -68,50 +67,112 @@ function daftar(){
 		
 	$result = mysqli_query($conn,"SELECT nama FROM orang WHERE nama ='$username'");
 	if (mysqli_fetch_assoc($result)) {
-		echo "<script>
-		alert('data Sudah tersedia');
-		</script>";
+		echo "<script>alert('Data Sudah tersedia');</script>";
 		return false;
 	}
-		
 	if ($password !== $password2) {
-		echo "<script>
-		alert('password tidak Sama');
-		</script>";
+		echo "<script>alert('Password tidak Sama');</script>";
 		return false;
 	} 
 	else{
 		$password = password_hash($password, PASSWORD_DEFAULT);
 		$password2 = password_hash($password2, PASSWORD_DEFAULT);
-		
 		mysqli_query($conn,"INSERT INTO orang VALUES(null,'$namalengkap','$username', 'anggota','$password')");
 		return true;
 	}
 }
-function hapus($data){
+
+ /**
+  * Destroy using id function
+  * 
+  * This function contains action to delete row in database using array 
+  */
+
+  function destroy_using_id(String $table_name, Array $arr_id){
 	global $conn;
-	$query = mysqli_query($conn,$data);
+
+	foreach($arr_id as $id) {
+		$sql = "DELETE FROM $table_name WHERE id = '$id'";
+		$query = mysqli_query($conn, $sql);
+	}
 
 	return $query;
-}
+  }
+
+
+ /**
+  * Delete picture function
+  *
+  * This function contains action to delete image, with parameter is path from image 
+  */
+
+  function delete_image(String $path) {
+	if(file_exists($path)) {
+		unlink($path);
+		return true;
+	} else {
+		return null;
+	}
+  }
+
+
+ /**
+  * Find function
+  * 
+  * This function find row from table using id column, only limit 1 
+  */
+
+  function find(String $table_name, String $id) {
+	global $conn;
+
+   	$sql = "SELECT * FROM $table_name WHERE id = '$id' LIMIT 1";
+	$query = mysqli_query($conn, $sql);
+	if(mysqli_affected_rows($conn)) {
+		return mysqli_fetch_assoc($query);
+	} else {
+		return null;
+	}
+  }
+
+
+ /**
+  * Get function
+  * 
+  * This function get all rows from table using id column
+  */
+
+  function get_where(String $table_name, String $column, String $value) {
+	global $conn;
+
+   	$sql = "SELECT * FROM $table_name WHERE $column = '$value'";
+	$query = mysqli_query($conn, $sql);
+	if(mysqli_affected_rows($conn)) {
+
+		$rows = [];
+		while($row = mysqli_fetch_assoc($query)) {
+			$rows[] = $row; 
+		}
+		return $rows;
+	} else {
+		return null;
+	}
+  }
+
+
 function login(){
     global $conn;
 		
-		$username = $_POST["nama"];
-		$password = $_POST["password"];
+	$username = $_POST["nama"];
+	$password = $_POST["password"];
 
-		$result = mysqli_query($conn,"SELECT * FROM orang WHERE nama='$username'");
-		if(mysqli_num_rows($result) === 1 ){
-
-			$row = mysqli_fetch_assoc($result);
-
-			if(password_verify($password, $row["password"])){
-				//set session
-				$_SESSION["login"] = $username;
-				$_SESSION['id'] = $row['id'];
-
+	$result = mysqli_query($conn,"SELECT * FROM orang WHERE nama='$username'");
+	if(mysqli_num_rows($result) === 1 ){
+		$row = mysqli_fetch_assoc($result);
+		if(password_verify($password, $row["password"])){
+			$_SESSION["login"] = $username;
+			$_SESSION['id'] = $row['id'];
 				header("Location:index.php");
 				exit;
 			}
 		}
-}
+ }
