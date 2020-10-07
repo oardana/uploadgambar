@@ -1,0 +1,94 @@
+*{
+    font-family: Arial;
+    color: white;
+}
+.login{
+    text-align: center;
+    width: 500px;
+    height: 400px;
+    background: linear-gradient(to left, #1B40F7 30%,#526EFA 70%);
+    margin: auto;
+    padding-top: 60px;
+    border-radius: 5px;
+}
+.login table{
+    margin: auto;
+}
+a{
+    text-decoration: none;
+}
+button{
+    color: black;
+    width: 100px;
+    height: 25px;
+    border: 1px solid white;
+    box-shadow:2px 2px 4px black;
+    border-radius: 2px;
+}
+.login input{
+    color: black;
+    border-radius: 5px;
+    width: 200px;
+    height: 20px;
+    border: 2px solid white;
+}
+.awal{
+    margin: auto;
+    width: 500px;
+    height: 750px;
+    background: linear-gradient(to left, #1B40F7 30%,#526EFA 70%);
+    border-radius: 15px;
+}
+.awal label a{
+    font-size: 30px;
+    text-decoration: none;
+    margin-left: 350px;
+    margin-top: 50px;
+}
+.awal img{
+    width: 350px;
+    height: 150px;
+    border-radius: 10px;
+    padding-top: 20px;
+}
+.awal table {
+    text-align: center;
+    margin: auto;
+}
+.awal .cari input{
+    color: black;
+    margin-left: 15px;
+    width:200px;
+    height: 25px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+.awal .page{
+    width: 200px;
+    height: 25px;
+    margin-left: 160px;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+.awal .page .isi a{
+    text-decoration: none;
+    font-size:30px;
+    background-color: #1B40F7;
+}
+.tambah{
+    padding-top: 30px;
+    margin: auto;
+    width: 500px;
+    height: 600px;
+}
+form table tr td{
+    padding-top: 20px;
+}
+
+.tambah form table tr td input{
+    width: 200px;
+    height: 25px;
+    border: 1px solid white;
+    color:black;
+    border-radius: 5px;
+}
